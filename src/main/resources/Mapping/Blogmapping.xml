@@ -1,0 +1,72 @@
+<?xmlcccccc version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vue.dao.BlogDao">
+
+<resultMap id="Blogmap" type="com.vue.pojo.Pinglun">
+    <id property="plid" column="plid"></id>
+    <result property="pldate" column="pldate"></result>
+    <result property="pluser" column="pluser"></result>
+    <result property="contenttitle" column="contenttitle"></result>
+    <result property="plcontent" column="plcontent"></result>
+    <result property="faid" column="faid"></result>
+    <association property="blog" javaType="com.vue.pojo.Blog">
+    <id property="blogid" column="plid"></id>
+     <result property="faid" column="faid"></result>
+     <result property="date" column="date"></result>
+       <result property="bloguser" column="bloguser"></result>
+        <result property="blogtitle" column="blogtitle"></result>
+         <result property="blogcontent" column="blogcontent"></result>
+          <result property="huifushu" column="huifushu"></result>
+    </association>
+<!-- 多对一，一对一<association property="blog" javaType="com.vue.pojo.Blog"> -->
+<!-- 一对多 -->
+<!-- <collection property="blog"  ofType="Blog"> -->
+</resultMap>
+
+<insert id="insertblog"  parameterType="com.vue.pojo.Blog">
+
+        insert into blog(date,bloguser,blogtitle,blogcontent) value(#{date},#{bloguser},#{blogtitle},#{blogcontent})
+        
+</insert>
+
+<select id="allblog" resultType="com.vue.pojo.Blog">
+        
+         select * from blog order by date desc
+         
+</select>
+
+<select id="selecttitle" parameterType="String" resultType="com.vue.pojo.Blog">
+
+         select * from blog where blogtitle=#{blogtitle}
+ 
+</select>
+
+<insert id="insertpinglun" parameterType="com.vue.pojo.Pinglun">
+
+         insert into pinglun(pldate,pluser,contenttitle,plcontent,faid) values
+         (#{pldate},#{pluser},#{contenttitle},#{plcontent},#{faid})
+
+</insert>
+
+<select id="selectcontent" parameterType="String" resultType="com.vue.pojo.Pinglun">
+
+         select * from pinglun where contenttitle=#{contenttitle} order by pldate desc
+ 
+</select>
+
+<select id="selects" parameterType="String" resultMap="Blogmap">
+
+         select DISTINCT(B.blogtitle),B.blogcontent from pinglun A ,blog B where A.contenttitle=#{contenttitle} AND A.contenttitle=B.blogtitle
+ 
+</select>
+
+<select id="getplid" parameterType="Integer" resultType="com.vue.pojo.Pinglun">
+
+         select * from pinglun where plid=#{plid}
+
+</select>
+
+
+</mapper>
