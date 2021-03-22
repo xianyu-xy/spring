@@ -31,7 +31,7 @@ public class Application {
 		// TODO Auto-generated method stub
 		SpringApplication.run(Application.class,args);
 		//允许特殊符号,本例是 | { } 做入参，也可追加其他符号
-		System.out.println("66");
+		System.out.println("6666");
         System.setProperty("tomcat.util.http.parser.HttpParser.requestTargetAllow","|{}[]");
 	}
 	//手动设置tomcat工厂，允许特殊符号,本例是 | { } 做入参，也可追加其他符号
